@@ -1,0 +1,6 @@
+{
+  "name": "DevFolio AI",
+  "description": "An AI-powered portfolio generator that builds, customizes, and deploys professional developer portfolios automatically using GitHub data and Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
