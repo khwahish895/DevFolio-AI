@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-bg: #050505;
+  --color-surface: #0f0f0f;
+  --color-border: #1e1e1e;
+  --color-accent: #9a8cff;
+  --color-text-main: #ffffff;
+  --color-text-muted: #888888;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text-main font-sans antialiased;
+  }
+}
+
+.nav-label {
+  @apply text-[10px] uppercase text-text-muted tracking-[0.1em] mb-4 block font-semibold;
+}
+
+.nav-item {
+  @apply flex items-center gap-3 p-2.5 rounded-md text-sm transition-colors cursor-pointer;
+}
+
+.nav-item.active {
+  @apply bg-surface border border-border text-white;
+}
+
+.ai-suggestion {
+  @apply bg-[rgba(154,140,255,0.05)] border border-[rgba(154,140,255,0.2)] p-4 rounded-xl mb-6;
+}
+
+.status-badge {
+  @apply text-[11px] uppercase tracking-[0.1em] py-1 px-2.5 border border-accent rounded-full text-accent font-medium;
+}
+
+.action-btn {
+  @apply w-full bg-accent text-black p-3 rounded-md font-semibold text-sm hover:opacity-90 transition-opacity;
+}
+
+.stat-row {
+  @apply flex justify-between mb-3 text-sm;
+}
