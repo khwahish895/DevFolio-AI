@@ -2,11 +2,12 @@ export async function summarizeProject(repoName: string, readme: string) {
   if (!readme) return "No description available.";
   
   try {
-    const response = await fetch("/api/summarizeProject", {
+    const response = await fetch("/.netlify/functions/ai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ repoName, readme })
+      body: JSON.stringify({ func: "summarizeProject", repoName, readme })
     });
+    if (!response.ok) throw new Error("API error");
     const data = await response.json();
     return data.summary || "A high-impact developer project.";
   } catch (err) {
@@ -15,17 +16,16 @@ export async function summarizeProject(repoName: string, readme: string) {
   }
 }
 
-
 export async function generateBio(username: string, repos: any[]) {
-  const repoNames = repos.map(r => r.name).join(", ");
-  const languages = Array.from(new Set(repos.map(r => r.language).filter(Boolean))).join(", ");
-
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Create a professional 3-sentence developer bio for ${username}. They build projects like ${repoNames} and specialize in ${languages}. Make it sound modern and high-impact.`,
+    const response = await fetch("/.netlify/functions/ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ func: "generateBio", username, repos })
     });
-    return response.text || "Innovative developer building the future of the web.";
+    if (!response.ok) throw new Error("API error");
+    const data = await response.json();
+    return data.bio || "Innovative developer building the future of the web.";
   } catch (err) {
     console.error("Bio generation failed:", err);
     return "Passionate software engineer focused on building robust and scalable applications.";
@@ -34,12 +34,17 @@ export async function generateBio(username: string, repos: any[]) {
 
 export async function getPortfolioSuggestions(bio: string, projectsCount: number) {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Provide 3 short, actionable tips (max 10 words each) to improve a developer portfolio with ${projectsCount} projects and this bio: "${bio}"`,
+    const response = await fetch("/.netlify/functions/ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ func: "getPortfolioSuggestions", bio, projectsCount })
     });
-    return response.text?.split("\n").filter(line => line.trim()) || [];
+    if (!response.ok) throw new Error("API error");
+    const data = await response.json();
+    return data.suggestions || ["Add more impact metrics", "Highlight core technologies", "Improve visual consistency"];
   } catch (err) {
+    console.error("Suggestions failed:", err);
     return ["Add more impact metrics", "Highlight core technologies", "Improve visual consistency"];
   }
 }
+

@@ -1,5 +1,5 @@
 {
-  "name": "react-example",
+  "name": "devfolio-ai",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "netlify:dev": "netlify dev"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -37,3 +38,4 @@
     "vite": "^6.2.0"
   }
 }
+
